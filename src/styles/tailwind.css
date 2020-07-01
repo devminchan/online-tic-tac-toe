@@ -17874,6 +17874,10 @@ video {
   flex-basis: 66.66%;
 }
 
+.justify-self-end {
+  justify-self: end;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
