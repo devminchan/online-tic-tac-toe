@@ -3,13 +3,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-.flex-basis-1 {
-  /* or flex-grow: 1; */
-  flex-basis: 33.33%;
-}
-
-.flex-basis-2 {
-  /* or flex-grow: 1; */
-  flex-basis: 66.66%;
-}
