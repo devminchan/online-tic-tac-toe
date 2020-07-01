@@ -17864,6 +17864,16 @@ video {
   transition-delay: 1000ms;
 }
 
+.flex-basis-1 {
+  /* or flex-grow: 1; */
+  flex-basis: 33.33%;
+}
+
+.flex-basis-2 {
+  /* or flex-grow: 1; */
+  flex-basis: 66.66%;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
