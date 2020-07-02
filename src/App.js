@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import GameBoard from './components/GameBoard';
 
 function App() {
   const rankingList = [1, 2, 3];
+
+  const [gameState, setGameState] = useState(false);
+
+  const handleGameStart = (e) => {
+    setGameState(true);
+  };
+
+  const handleGameStop = (e) => {
+    setGameState(false);
+  };
 
   return (
     <div className="App justify-between h-screen">
@@ -9,17 +20,35 @@ function App() {
       <div className="w-screen h-full bg-gray-300 flex">
         {/* left-side container */}
         <div className="w-7/12 block flex flex-col">
-          {/* match button */}
+          {/* match button & game board */}
           <div className="w-full flex-grow relative">
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              <p className="absolute top-0 mt-4 text-xl text-purple-500">
-                welcome to online tic-tac-toe!
-              </p>
-              <button className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl">
-                PLAY NOW!
-              </button>
-              <div className="pt-3 text-2xl text-gray-700">0:00</div>
-            </div>
+            {gameState ? (
+              /* game board */
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <p className="absolute top-0 mt-4 text-xl text-purple-500">
+                  Username vs Username
+                </p>
+                <div className="w-full h-full flex justify-center">
+                  <div className="self-center mt-8 w-2/3 h-full flex items-center">
+                    <GameBoard />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* match button */
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <p className="absolute top-0 mt-4 text-xl text-purple-500">
+                  welcome to online tic-tac-toe!
+                </p>
+                <button
+                  className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl"
+                  onClick={handleGameStart}
+                >
+                  PLAY NOW!
+                </button>
+                <div className="pt-3 text-2xl text-gray-700">0:00</div>
+              </div>
+            )}
           </div>
 
           {/* chatting */}

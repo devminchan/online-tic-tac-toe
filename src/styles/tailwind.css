@@ -17864,6 +17864,18 @@ video {
   transition-delay: 1000ms;
 }
 
+.pt-100p {
+  padding-top: 100%;
+}
+
+.pt-75p {
+  padding-top: 75%;
+}
+
+.pb-100p {
+  padding-bottom: 100%;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
