@@ -39,7 +39,9 @@ function GameBoard() {
           onClick={handleBoardClick}
         >
           {mapState[idx] ? (
-            <div className="absolute">{mapState[idx].userId}</div>
+            <div className="absolute text-xl">
+              {mapState[idx].turn % 2 === 0 ? 'X' : 'O'}
+            </div>
           ) : (
             ''
           )}
