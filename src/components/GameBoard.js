@@ -2,8 +2,10 @@ import React from 'react';
 
 function GameBoard() {
   return (
-    <div className="max-h-full w-full pt-75p relative bg-blue-400">
-      <div>Hello</div>
+    <div className="h-full w-full bg-gray-400 grid grid-cols-10 grid-rows-10 rounded">
+      {[...Array(100).keys()].map((idx) => (
+        <div className="border"></div>
+      ))}
     </div>
   );
 }

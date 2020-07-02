@@ -25,13 +25,11 @@ function App() {
             {gameState ? (
               /* game board */
               <div className="w-full h-full flex flex-col justify-center items-center">
-                <p className="absolute top-0 mt-4 text-xl text-purple-500">
+                <p className="h-auto mt-4 text-xl text-purple-500">
                   Username vs Username
                 </p>
-                <div className="w-full h-full flex justify-center">
-                  <div className="self-center mt-8 w-2/3 h-full flex items-center">
-                    <GameBoard />
-                  </div>
+                <div className="w-2/3 mt-2 mb-2 h-full flex justify-center">
+                  <GameBoard />
                 </div>
               </div>
             ) : (
