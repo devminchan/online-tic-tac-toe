@@ -1,32 +1,7 @@
 import React from 'react';
 
 function App() {
-  const rankingList = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    12,
-    13,
-    14,
-    15,
-  ];
+  const rankingList = [1, 2, 3];
 
   return (
     <div className="App justify-between h-screen">
@@ -78,10 +53,10 @@ function App() {
         <div className="w-5/12 pt-8 pb-4 pl-8 pr-8">
           {/* leaderboard */}
           <div className="bg-gray-400 w-full h-full rounded flex flex-col">
-            <div className="flex-1 flex justify-center pt-2 pb-4">
+            <div className="flex justify-center pt-2 pb-4">
               <h3 className="text-3xl text-purple-600">LEADERBOARDS</h3>
             </div>
-            <ul className="h-128 overflow-y-auto">
+            <ul className="flex-grow overflow-y-auto">
               {rankingList.map((rank) => (
                 <li className="block w-full">
                   <div className="flex bg-gray-500 rounded ml-6 mr-6 pl-4 pr-4 pt-1 pb-1 text-xl mb-2">
