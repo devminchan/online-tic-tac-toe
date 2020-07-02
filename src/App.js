@@ -85,7 +85,7 @@ function App() {
               {rankingList.map((rank) => (
                 <li className="block w-full">
                   <div className="flex bg-gray-500 rounded ml-6 mr-6 pl-4 pr-4 pt-1 pb-1 text-xl mb-2">
-                    <div>{rank}</div>
+                    <div className="w-3">{rank}</div>
                     <div className="ml-5">username</div>
                     <div className="ml-auto">score</div>
                   </div>
