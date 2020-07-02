@@ -29,7 +29,7 @@ function App() {
                   Username vs Username
                 </p>
                 <div className="w-2/3 mt-2 mb-2 h-full flex justify-center">
-                  <GameBoard />
+                  <GameBoard onGameEnd={handleGameStop} />
                 </div>
               </div>
             ) : (
@@ -52,8 +52,8 @@ function App() {
           {/* chatting */}
           <div className="w-full px-4 py-2 block">
             <ul className="h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
-              {rankingList.map((rank) => (
-                <li className="w-full mx-2 flex flex-wrap">
+              {rankingList.map((idx) => (
+                <li key={idx} className="w-full mx-2 flex flex-wrap">
                   <div className="mr-4 text-base font-semibold">username</div>
                   <div>hello</div>
                 </li>
@@ -84,10 +84,10 @@ function App() {
               <h3 className="text-3xl text-purple-600">LEADERBOARDS</h3>
             </div>
             <ul className="flex-grow overflow-y-auto">
-              {rankingList.map((rank) => (
-                <li className="block w-full">
+              {rankingList.map((idx) => (
+                <li key={idx} className="block w-full">
                   <div className="flex bg-gray-500 rounded ml-6 mr-6 pl-4 pr-4 pt-1 pb-1 text-xl mb-2">
-                    <div className="w-3">{rank}</div>
+                    <div className="w-3">{idx}</div>
                     <div className="ml-5">username</div>
                     <div className="ml-auto">score</div>
                   </div>
