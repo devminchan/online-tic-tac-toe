@@ -13,7 +13,7 @@ class App extends React.Component {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    var endpoint = 'ws://localhost:2567';
+    const endpoint = process.env.SERVER_URL || 'ws://localhost:2567';
     this.client = new Colyseus.Client(endpoint);
   }
 
