@@ -127,7 +127,7 @@ class App extends React.Component {
                   <p className="h-auto mt-4 text-xl text-purple-500">
                     {matchStr}
                   </p>
-                  <div className="w-full sm:w-4/5 md:w-2/3 lg:w-3/4 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
+                  <div className="w-full sm:w-4/5 md:w-7/12 lg:w-2/3 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
                       onGameEnd={this.handleGameStop}
