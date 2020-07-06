@@ -11,6 +11,7 @@ class App extends React.Component {
     statusMessage: greeting,
     gmaeState: false,
     chatState: List([]),
+    chatMessage: '',
   };
 
   constructor() {
@@ -37,13 +38,6 @@ class App extends React.Component {
 
   handleGameStart = async (e) => {
     this.room = await this.client.joinOrCreate('game_room');
-
-    this.room.onMessage('joined', (player) => {
-      const message = `player ${player.username} joined.`;
-
-      const newChatState = this.state.chatState.unshift(message);
-      this.setChatState(newChatState);
-    });
 
     this.room.onMessage('messages', (message) => {
       const newChatState = this.state.chatState.unshift(message);
@@ -73,6 +67,7 @@ class App extends React.Component {
         gameState: false,
         statusMessage: `Winner is ${result.winner}`,
         players: [],
+        chatMessage: '',
       });
     } else {
       this.setState({
@@ -80,14 +75,35 @@ class App extends React.Component {
         gameState: false,
         statusMessage: 'Draw!',
         players: [],
+        chatMessage: '',
       });
     }
   };
 
+  handleChangeMessage = (e) => {
+    const message = e.target.value;
+
+    this.setState({
+      ...this.state,
+      chatMessage: message,
+    });
+  };
+
+  handleSendMessage = (e) => {
+    e.preventDefault();
+
+    this.room.send('message', {
+      message: this.state.chatMessage,
+    });
+
+    this.setState({
+      ...this.state,
+      chatMessage: '',
+    });
+  };
+
   render() {
     let matchStr = 'Waiting for new game...';
-
-    console.log('PLAYERS', this.state.players);
 
     if (this.state.players.length >= 2) {
       matchStr = `${this.state.players[0].username} VS ${this.state.players[1].username}`;
@@ -146,10 +162,13 @@ class App extends React.Component {
                     className="flex-grow h-8 px-2 rounded"
                     type="text"
                     placeholder="Input Text!"
+                    onChange={this.handleChangeMessage}
+                    value={this.state.chatMessage}
                   />
                   <button
                     className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-4 ml-4 rounded text-base"
                     type="submit"
+                    onClick={this.handleSendMessage}
                   >
                     Send
                   </button>
