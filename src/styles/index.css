@@ -4,22 +4,6 @@
 
 @tailwind utilities;
 
-.pt-100p {
-  padding-top: 100%;
-}
-
-.pt-75p {
-  padding-top: 75%;
-}
-
 .pb-100p {
   padding-bottom: 100%;
-}
-
-.w-square-height {
-  width: 100vh;
-}
-
-.h-square-width {
-  height: 100vw;
 }

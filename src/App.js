@@ -127,7 +127,7 @@ class App extends React.Component {
                   <p className="h-auto mt-4 text-xl text-purple-500">
                     {matchStr}
                   </p>
-                  <div className="w-full lg:w-3/4 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
+                  <div className="w-full sm:w-4/5 md:w-2/3 lg:w-3/4 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
                       onGameEnd={this.handleGameStop}
@@ -142,7 +142,7 @@ class App extends React.Component {
                     {this.state.statusMessage}
                   </p>
                   <button
-                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl"
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-16 sm:mb-24 md:mb-32 lg:mb-40"
                     onClick={this.handleGameStart}
                   >
                     PLAY NOW!
