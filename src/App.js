@@ -18,7 +18,7 @@ class App extends React.Component {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    const endpoint = process.env.SERVER_URL || 'ws://localhost:2567';
+    const endpoint = 'ws://api.online-tic-tac-toe.com';
     this.client = new Colyseus.Client(endpoint);
   }
 
