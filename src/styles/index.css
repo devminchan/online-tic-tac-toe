@@ -12,7 +12,14 @@
   padding-top: 75%;
 }
 
-
 .pb-100p {
   padding-bottom: 100%;
+}
+
+.w-square-height {
+  width: 100vh;
+}
+
+.h-square-width {
+  height: 100vw;
 }

@@ -92,6 +92,10 @@ class App extends React.Component {
   handleSendMessage = (e) => {
     e.preventDefault();
 
+    if (!this.room) {
+      return;
+    }
+
     this.room.send('message', {
       message: this.state.chatMessage,
     });
@@ -116,14 +120,15 @@ class App extends React.Component {
           {/* left-side container */}
           <div className="w-full lg:w-7/12 block flex flex-col relative">
             {/* match button & game board */}
-            <div className="w-full flex-grow">
+            <div className="w-full flex-1">
               {this.state.gameState ? (
                 /* game board */
-                <div className="w-full h-full flex flex-col justify-center items-center">
+                <div className="w-full h-full flex flex-col justify-start items-center">
                   <p className="h-auto mt-4 text-xl text-purple-500">
                     {matchStr}
                   </p>
-                  <div className="w-2/3 mt-2 mb-2 h-full flex justify-center">
+                  <div className="w-full lg:w-3/4 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
+                    <div className="pb-100p"></div>
                     <GameBoard
                       onGameEnd={this.handleGameStop}
                       room={this.room}
@@ -147,15 +152,17 @@ class App extends React.Component {
             </div>
 
             {/* chatting */}
-            <div className="w-full px-4 py-2 block absolute bottom-0">
-              <ul className="h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
+            <div className="w-full flex-initial px-4 py-2 block absolute bottom-0 pointer-events-none">
+              <ul className="h-32 lg:h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
                 {this.state.chatState.map((chat, key) => (
                   <li key={key} className="w-full mx-2 flex flex-wrap">
-                    <div>{chat}</div>
+                    <div className="text-opacity-75 text-indigo-900">
+                      {chat}
+                    </div>
                   </li>
                 ))}
               </ul>
-              <div className="mt-2 h-12">
+              <div className="mt-2 h-12 pointer-events-auto">
                 <form action="" className="w-full h-full flex items-center">
                   <input
                     className="flex-grow h-8 px-2 rounded"

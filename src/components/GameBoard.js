@@ -47,7 +47,7 @@ class GameBoard extends React.Component {
         {this.reduceNumbers().map((idx) => (
           <div
             key={idx}
-            className="border flex justify-center items-center relative"
+            className="border flex justify-center items-center relative pointer-events-auto"
             onClick={() => this.handleBoardClick(idx)}
           >
             {this.state.markState.find((mark) => mark.point === idx) ? (
