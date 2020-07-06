@@ -182,7 +182,7 @@ class App extends React.Component {
               <div className="flex justify-center pt-2 pb-4">
                 <h3 className="text-3xl text-purple-600">LEADERBOARDS</h3>
               </div>
-              <div>COMMING SOON!</div>
+              <div className="text-2xl text-center mt-4">COMMING SOON!</div>
             </div>
           </div>
         </div>
