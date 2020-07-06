@@ -142,7 +142,6 @@ class App extends React.Component {
                   >
                     PLAY NOW!
                   </button>
-                  <div className="pt-3 text-2xl text-gray-700">0:00</div>
                 </div>
               )}
             </div>
