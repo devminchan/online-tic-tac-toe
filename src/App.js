@@ -18,7 +18,6 @@ class App extends React.Component {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    // revert commit!
     const endpoint = 'wss://api.online-tic-tac-toe.com';
     this.client = new Colyseus.Client(endpoint);
   }
