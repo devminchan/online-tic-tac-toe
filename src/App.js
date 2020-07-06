@@ -114,7 +114,7 @@ class App extends React.Component {
         {/* body */}
         <div className="w-screen h-full bg-gray-300 flex">
           {/* left-side container */}
-          <div className="w-7/12 block flex flex-col">
+          <div className="w-full lg:w-7/12 block flex flex-col">
             {/* match button & game board */}
             <div className="w-full flex-grow relative">
               {this.state.gameState ? (
@@ -176,7 +176,7 @@ class App extends React.Component {
             </div>
           </div>
           {/* right-side container */}
-          <div className="w-5/12 pt-8 pb-4 pl-8 pr-8">
+          <div className="w-0 hidden lg:block lg:w-5/12 pt-8 pb-4 pl-8 pr-8">
             {/* leaderboard */}
             <div className="bg-gray-400 w-full h-full rounded flex flex-col">
               <div className="flex justify-center pt-2 pb-4">
