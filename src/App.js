@@ -110,13 +110,13 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App justify-between h-screen">
+      <div className="App justify-between w-screen h-screen">
         {/* body */}
         <div className="w-screen h-full bg-gray-300 flex">
           {/* left-side container */}
-          <div className="w-full lg:w-7/12 block flex flex-col">
+          <div className="w-full lg:w-7/12 block flex flex-col relative">
             {/* match button & game board */}
-            <div className="w-full flex-grow relative">
+            <div className="w-full flex-grow">
               {this.state.gameState ? (
                 /* game board */
                 <div className="w-full h-full flex flex-col justify-center items-center">
@@ -147,7 +147,7 @@ class App extends React.Component {
             </div>
 
             {/* chatting */}
-            <div className="w-full px-4 py-2 block">
+            <div className="w-full px-4 py-2 block absolute bottom-0">
               <ul className="h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
                 {this.state.chatState.map((chat, key) => (
                   <li key={key} className="w-full mx-2 flex flex-wrap">
