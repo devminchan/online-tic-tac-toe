@@ -3,8 +3,12 @@ import GameBoard from './components/GameBoard';
 import * as Colyseus from 'colyseus.js';
 import { List } from 'immutable';
 
+const greeting = 'welcome to online-tic-tac-toe';
+
 class App extends React.Component {
   state = {
+    players: [],
+    statusMessage: greeting,
     gmaeState: false,
     chatState: List([]),
   };
@@ -46,25 +50,48 @@ class App extends React.Component {
       this.setChatState(newChatState);
     });
 
-    this.room.onMessage('gameResult', (gameResult) => {
-      alert('Gameover!');
-
-      console.log(gameResult);
+    this.room.onMessage('players', (players) => {
+      this.setState({
+        ...this.state,
+        players,
+      });
     });
 
     this.setGameState(true);
   };
 
-  handleGameStop = (e) => {
+  handleGameStop = (result) => {
+    alert('GameOver!');
+
     if (this.room) {
       this.room.send('exit');
     }
 
-    this.setGameState(false);
+    if (result.winner) {
+      this.setState({
+        ...this.state,
+        gameState: false,
+        statusMessage: `Winner is ${result.winner}`,
+        players: [],
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        gameState: false,
+        statusMessage: 'Draw!',
+        players: [],
+      });
+    }
   };
 
   render() {
-    const rankingList = [1, 2, 3];
+    let matchStr = 'Waiting for new game...';
+
+    console.log('PLAYERS', this.state.players);
+
+    if (this.state.players.length >= 2) {
+      matchStr = `${this.state.players[0].username} VS ${this.state.players[1].username}`;
+    }
 
     return (
       <div className="App justify-between h-screen">
@@ -78,7 +105,7 @@ class App extends React.Component {
                 /* game board */
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="h-auto mt-4 text-xl text-purple-500">
-                    Username vs Username
+                    {matchStr}
                   </p>
                   <div className="w-2/3 mt-2 mb-2 h-full flex justify-center">
                     <GameBoard
@@ -91,7 +118,7 @@ class App extends React.Component {
                 /* match button */
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="absolute top-0 mt-4 text-xl text-purple-500">
-                    welcome to online tic-tac-toe!
+                    {this.state.statusMessage}
                   </p>
                   <button
                     className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl"
@@ -109,7 +136,6 @@ class App extends React.Component {
               <ul className="h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
                 {this.state.chatState.map((chat, key) => (
                   <li key={key} className="w-full mx-2 flex flex-wrap">
-                    <div className="mr-4 text-base font-semibold">username</div>
                     <div>{chat}</div>
                   </li>
                 ))}
@@ -125,7 +151,7 @@ class App extends React.Component {
                     className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-4 ml-4 rounded text-base"
                     type="submit"
                   >
-                    전송
+                    Send
                   </button>
                 </form>
               </div>
@@ -138,17 +164,7 @@ class App extends React.Component {
               <div className="flex justify-center pt-2 pb-4">
                 <h3 className="text-3xl text-purple-600">LEADERBOARDS</h3>
               </div>
-              <ul className="flex-grow overflow-y-auto">
-                {rankingList.map((idx) => (
-                  <li key={idx} className="block w-full">
-                    <div className="flex bg-gray-500 rounded ml-6 mr-6 pl-4 pr-4 pt-1 pb-1 text-xl mb-2">
-                      <div className="w-3">{idx}</div>
-                      <div className="ml-5">username</div>
-                      <div className="ml-auto">score</div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <div>COMMING SOON!</div>
             </div>
           </div>
         </div>

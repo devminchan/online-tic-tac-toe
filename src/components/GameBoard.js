@@ -6,9 +6,10 @@ class GameBoard extends React.Component {
     turnCount: 0,
   };
 
-  constructor({ room }) {
+  constructor({ onGameEnd, room }) {
     super();
     this.room = room;
+    this.onGameEnd = onGameEnd;
   }
 
   componentDidMount(props) {
@@ -17,6 +18,10 @@ class GameBoard extends React.Component {
         markState: [...this.state.markState, mark],
         turnCount: this.state.turnCount + 1,
       });
+    });
+
+    this.room.onMessage('gameResult', (result) => {
+      this.onGameEnd(result);
     });
   }
 
