@@ -28,7 +28,7 @@ class GameBoard extends React.Component {
   reduceNumbers = () => {
     const arr = [];
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 361; i++) {
       arr.push(i);
     }
 
@@ -43,7 +43,7 @@ class GameBoard extends React.Component {
 
   render() {
     return (
-      <div className="h-full w-full bg-gray-400 grid grid-cols-10 grid-rows-10 rounded">
+      <div className="h-full w-full bg-gray-400 grid grid-cols-19 rounded">
         {this.reduceNumbers().map((idx) => (
           <div
             key={idx}
