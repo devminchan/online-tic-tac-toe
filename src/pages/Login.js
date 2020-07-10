@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import axios from '../utils/axios';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const history = useHistory();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -31,21 +29,9 @@ export default function Login() {
       ).data;
 
       alert('Login success!');
-
       localStorage.setItem('token', result.token);
 
-      axios.interceptors.request.use(
-        (config) => {
-          // eslint-disable-next-line no-param-reassign
-          config.headers.Authorization = `bearer ${result.token}`;
-          return config;
-        },
-        (error) => {
-          Promise.reject(error);
-        }
-      );
-
-      history.push('/');
+      window.location.href = '/'; // UserInfoFetcher가 정보를 fetch 할 수 있도록 다시 로딩
     } catch (err) {
       // console.error(err);
       if (err.response) {
