@@ -64,7 +64,11 @@ class App extends React.Component {
   };
 
   handleGameStop = (result) => {
-    alert('GameOver!');
+    if (result.winner) {
+      alert(`Winner is ${result.winner}`);
+    } else {
+      alert(`Draw!`);
+    }
 
     if (this.room) {
       this.room.send('exit');
@@ -74,7 +78,6 @@ class App extends React.Component {
       this.setState({
         ...this.state,
         gameState: false,
-        statusMessage: `Winner is ${result.winner}`,
         players: [],
         chatMessage: '',
       });
@@ -82,11 +85,25 @@ class App extends React.Component {
       this.setState({
         ...this.state,
         gameState: false,
-        statusMessage: 'Draw!',
         players: [],
         chatMessage: '',
       });
     }
+  };
+
+  handleGameLeft = (e) => {
+    e.preventDefault();
+
+    if (this.room) {
+      this.room.send('exit');
+    }
+
+    this.setState({
+      ...this.state,
+      gameState: false,
+      players: [],
+      chatMessage: '',
+    });
   };
 
   handleChangeMessage = (e) => {
@@ -133,9 +150,16 @@ class App extends React.Component {
               {this.state.gameState ? (
                 /* game board */
                 <div className="w-full h-full flex flex-col justify-start items-center">
-                  <p className="h-auto mt-4 text-xl text-purple-500">
+                  <div className="flex justify-around items-center h-auto mt-4 text-xl text-purple-500">
                     {matchStr}
-                  </p>
+                    <a
+                      className="ml-4 text-base text-purple-500 hover:text-purple-800"
+                      href="#"
+                      onClick={this.handleGameLeft}
+                    >
+                      Left game
+                    </a>
+                  </div>
                   <div className="w-full sm:w-4/5 md:w-7/12 lg:w-2/3 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
