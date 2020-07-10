@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import axios from '../utils/axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -94,13 +95,19 @@ export default function Login() {
                   placeholder="********"
                 />
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-between">
                 <button
                   class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
                   Continue
                 </button>
+
+                <Link to="/">
+                  <a className="text-base text-purple-500 hover:text-purple-800">
+                    Back to main
+                  </a>
+                </Link>
               </div>
             </div>
           </form>
