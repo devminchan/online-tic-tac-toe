@@ -2,6 +2,7 @@ import React from 'react';
 import GameBoard from './components/GameBoard';
 import * as Colyseus from 'colyseus.js';
 import { List } from 'immutable';
+import { SERVER_URL } from './constants';
 
 const greeting = 'welcome to online-tic-tac-toe';
 
@@ -18,7 +19,9 @@ class App extends React.Component {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    const endpoint = 'ws://localhost:2567';
+    const endpoint = `${
+      process.env.NODE_ENV === 'production' ? 'wss' : 'ws'
+    }://${SERVER_URL}`;
     this.client = new Colyseus.Client(endpoint);
   }
 
@@ -37,7 +40,11 @@ class App extends React.Component {
   };
 
   handleGameStart = async (e) => {
-    this.room = await this.client.joinOrCreate('game_room');
+    const token = localStorage.getItem('token');
+
+    this.room = await this.client.joinOrCreate('game_room', {
+      accessToken: token,
+    });
 
     this.room.onMessage('messages', (message) => {
       const newChatState = this.state.chatState.unshift(message);
