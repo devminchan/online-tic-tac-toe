@@ -171,11 +171,19 @@ class App extends React.Component {
                     {`Logged in as ${this.state.userInfo.username}`}
                   </p>
                   <button
-                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-4"
                     onClick={this.handleGameStart}
                   >
                     PLAY NOW!
                   </button>
+                  <Link
+                    to="/setting"
+                    className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                  >
+                    <a className="text-xl lg:text-2xl text-purple-600">
+                      Setting
+                    </a>
+                  </Link>
                 </div>
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center">
