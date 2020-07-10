@@ -5,12 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import './styles/tailwind.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import { SignUp } from './pages/SignUp';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
         <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>
