@@ -1,8 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from '../utils/axios';
 
 export default function Setting({ user }) {
+  const handleLogout = async (event) => {
+    localStorage.setItem('token', '');
+    alert('Logout success!');
+    window.location.href = '/';
+  };
+
+  const handleDelete = async (event) => {
+    try {
+      await axios.delete('/users/me');
+      localStorage.setItem('token', '');
+      alert('success to delete account');
+      window.location.href = '/';
+    } catch (err) {
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert(err.message);
+      }
+    }
+  };
+
   return (
     <div className="App w-screen h-screen bg-gray-300 absolute">
       <div className="flex justify-center h-full md:h-auto">
@@ -21,10 +43,18 @@ export default function Setting({ user }) {
             </div>
             <div>
               <div class="flex items-center justify-start">
-                <a className="text-base text-purple-400 hover:text-purple-800">
+                <a
+                  className="text-base text-purple-400 hover:text-purple-800"
+                  onClick={handleLogout}
+                  href="#"
+                >
                   Logout
                 </a>
-                <a className="ml-4 text-base text-red-500 hover:text-red-800">
+                <a
+                  className="ml-4 text-base text-red-500 hover:text-red-800"
+                  onClick={handleDelete}
+                  href="#"
+                >
                   Delete account
                 </a>
                 <Link to="/" className="flex-1 flex justify-end">
