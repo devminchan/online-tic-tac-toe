@@ -5,11 +5,10 @@ import * as Colyseus from 'colyseus.js';
 import { List } from 'immutable';
 import { Link } from 'react-router-dom';
 import { SERVER_URL } from './constants';
-import axios from './utils/axios';
+import withUser from './containers/withUser';
 
 class App extends React.Component {
   state = {
-    userInfo: null,
     players: [],
     gmaeState: false,
     chatState: List([]),
@@ -26,25 +25,6 @@ class App extends React.Component {
     this.client = new Colyseus.Client(endpoint);
 
     this.history = history;
-  }
-
-  componentDidMount() {
-    this.getCurrentUserInfo();
-  }
-
-  async getCurrentUserInfo() {
-    try {
-      const user = (await axios.get('/users/me')).data;
-
-      this.setState({
-        ...this.state,
-        userInfo: user,
-      });
-    } catch (e) {
-      if (!e.response || e.response.status !== 401) {
-        console.error(e.message);
-      }
-    }
   }
 
   setGameState = (gameState) => {
@@ -164,11 +144,11 @@ class App extends React.Component {
                     />
                   </div>
                 </div>
-              ) : this.state.userInfo ? (
+              ) : this.props.userState ? (
                 /* match button */
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="absolute top-0 mt-4 text-xl text-purple-500">
-                    {`Logged in as ${this.state.userInfo.username}`}
+                    {`Logged in as ${this.props.userState.username}`}
                   </p>
                   <button
                     className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-4"
@@ -250,4 +230,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withUser(App);

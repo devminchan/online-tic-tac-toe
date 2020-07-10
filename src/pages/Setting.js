@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../utils/axios';
+import { UserContext } from '../context/UserProvider';
 
-export default function Setting({ user }) {
+export default function Setting() {
+  const { userState } = useContext(UserContext);
+
   const handleLogout = async (event) => {
     localStorage.setItem('token', '');
     alert('Logout success!');
@@ -38,7 +41,7 @@ export default function Setting({ user }) {
             <div class="mb-8 md:mb-12 lg:mb-16">
               <div class="block text-gray-600 text-sm mb-2">Logged in as</div>
               <div class="text-lg lg:text-xl w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                {user ? user.username : 'username'}
+                {userState ? userState.username : 'N/A'}
               </div>
             </div>
             <div>
