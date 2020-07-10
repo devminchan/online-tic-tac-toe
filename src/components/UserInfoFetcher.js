@@ -11,10 +11,8 @@ export default function () {
       const user = (await axios.get('/users/me')).data;
       setUserState(user);
     } catch (e) {
-      if (e.response) {
-        alert(e.response.data.message);
-      } else {
-        alert(e.message);
+      if (!e.response || e.response.status !== 401) {
+        alert.error(e.message);
       }
     }
   };
