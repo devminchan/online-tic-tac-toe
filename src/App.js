@@ -18,7 +18,7 @@ class App extends React.Component {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    const endpoint = 'wss://api.online-tic-tac-toe.com';
+    const endpoint = 'ws://localhost:2567';
     this.client = new Colyseus.Client(endpoint);
   }
 
@@ -114,11 +114,11 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App justify-between w-screen h-screen">
+      <div className="App w-screen h-screen">
         {/* body */}
-        <div className="w-screen h-full bg-gray-300 flex">
+        <div className="w-full h-full bg-gray-300 flex">
           {/* left-side container */}
-          <div className="w-full lg:w-7/12 block flex flex-col relative">
+          <div className="w-full lg:w-7/12 flex flex-col relative">
             {/* match button & game board */}
             <div className="w-full flex-1">
               {this.state.gameState ? (
