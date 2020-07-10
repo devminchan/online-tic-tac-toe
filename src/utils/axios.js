@@ -6,6 +6,6 @@ export default axios.create({
     process.env.NODE_ENV === 'production' ? 'https' : 'http'
   }://${SERVER_URL}/api`,
   headers: {
-    Authrization: localStorage.getItem('token'),
+    Authorization: `bearer ${localStorage.getItem('token')}`,
   },
 });

@@ -1,21 +1,22 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import GameBoard from './components/GameBoard';
 import * as Colyseus from 'colyseus.js';
 import { List } from 'immutable';
+import { Link } from 'react-router-dom';
 import { SERVER_URL } from './constants';
-
-const greeting = 'welcome to online-tic-tac-toe';
+import axios from './utils/axios';
 
 class App extends React.Component {
   state = {
+    userInfo: null,
     players: [],
-    statusMessage: greeting,
     gmaeState: false,
     chatState: List([]),
     chatMessage: '',
   };
 
-  constructor() {
+  constructor({ history }) {
     super();
 
     // use current hostname/port as colyseus server endpoint
@@ -23,6 +24,27 @@ class App extends React.Component {
       process.env.NODE_ENV === 'production' ? 'wss' : 'ws'
     }://${SERVER_URL}`;
     this.client = new Colyseus.Client(endpoint);
+
+    this.history = history;
+  }
+
+  componentDidMount() {
+    this.getCurrentUserInfo();
+  }
+
+  async getCurrentUserInfo() {
+    try {
+      const user = (await axios.get('/users/me')).data;
+
+      this.setState({
+        ...this.state,
+        userInfo: user,
+      });
+    } catch (e) {
+      if (!e.response || e.response.status !== 401) {
+        console.error(e.message);
+      }
+    }
   }
 
   setGameState = (gameState) => {
@@ -142,11 +164,11 @@ class App extends React.Component {
                     />
                   </div>
                 </div>
-              ) : (
+              ) : this.state.userInfo ? (
                 /* match button */
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="absolute top-0 mt-4 text-xl text-purple-500">
-                    {this.state.statusMessage}
+                    {`Logged in as ${this.state.userInfo.username}`}
                   </p>
                   <button
                     className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-16 sm:mb-24 md:mb-32 lg:mb-40"
@@ -154,6 +176,21 @@ class App extends React.Component {
                   >
                     PLAY NOW!
                   </button>
+                </div>
+              ) : (
+                <div className="w-full h-full flex flex-col justify-center items-center">
+                  <Link to="/login">
+                    <a className="text-xl lg:text-2xl text-purple-600">Login</a>
+                  </Link>
+                  <div className="text-gray-800">or</div>
+                  <Link
+                    to="/signup"
+                    className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                  >
+                    <a className="text-xl lg:text-2xl text-purple-600">
+                      Signup
+                    </a>
+                  </Link>
                 </div>
               )}
             </div>

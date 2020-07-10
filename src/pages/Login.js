@@ -34,9 +34,16 @@ export default function Login() {
 
       localStorage.setItem('token', result.token);
 
-      axios.interceptors.request.use(function (config) {
-        config.headers.Authorization = `bearer ${result.token}`;
-      });
+      axios.interceptors.request.use(
+        (config) => {
+          // eslint-disable-next-line no-param-reassign
+          config.headers.Authorization = `bearer ${result.token}`;
+          return config;
+        },
+        (error) => {
+          Promise.reject(error);
+        }
+      );
 
       history.push('/');
     } catch (err) {
