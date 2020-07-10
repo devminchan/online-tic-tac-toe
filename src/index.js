@@ -6,6 +6,7 @@ import './styles/tailwind.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import { SignUp } from './pages/SignUp';
+import Setting from './pages/Setting';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/setting" component={Setting} />
         <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>
