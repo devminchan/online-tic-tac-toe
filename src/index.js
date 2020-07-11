@@ -3,10 +3,26 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './styles/tailwind.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './pages/Login';
+import { SignUp } from './pages/SignUp';
+import Setting from './pages/Setting';
+import UserProvider from './context/UserProvider';
+import UserInfoFetcher from './components/UserInfoFetcher';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserProvider>
+      <UserInfoFetcher />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/setting" component={Setting} />
+          <Route path="/" component={App} />
+        </Switch>
+      </BrowserRouter>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

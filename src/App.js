@@ -1,25 +1,30 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import GameBoard from './components/GameBoard';
 import * as Colyseus from 'colyseus.js';
 import { List } from 'immutable';
-
-const greeting = 'welcome to online-tic-tac-toe';
+import { Link } from 'react-router-dom';
+import { SERVER_URL } from './constants';
+import withUser from './containers/withUser';
 
 class App extends React.Component {
   state = {
     players: [],
-    statusMessage: greeting,
     gmaeState: false,
     chatState: List([]),
     chatMessage: '',
   };
 
-  constructor() {
+  constructor({ history }) {
     super();
 
     // use current hostname/port as colyseus server endpoint
-    const endpoint = 'wss://api.online-tic-tac-toe.com';
+    const endpoint = `${
+      process.env.NODE_ENV === 'production' ? 'wss' : 'ws'
+    }://${SERVER_URL}`;
     this.client = new Colyseus.Client(endpoint);
+
+    this.history = history;
   }
 
   setGameState = (gameState) => {
@@ -37,7 +42,11 @@ class App extends React.Component {
   };
 
   handleGameStart = async (e) => {
-    this.room = await this.client.joinOrCreate('game_room');
+    const token = localStorage.getItem('token');
+
+    this.room = await this.client.joinOrCreate('game_room', {
+      accessToken: token,
+    });
 
     this.room.onMessage('messages', (message) => {
       const newChatState = this.state.chatState.unshift(message);
@@ -55,7 +64,11 @@ class App extends React.Component {
   };
 
   handleGameStop = (result) => {
-    alert('GameOver!');
+    if (result.winner) {
+      alert(`Winner is ${result.winner}`);
+    } else {
+      alert(`Draw!`);
+    }
 
     if (this.room) {
       this.room.send('exit');
@@ -65,7 +78,6 @@ class App extends React.Component {
       this.setState({
         ...this.state,
         gameState: false,
-        statusMessage: `Winner is ${result.winner}`,
         players: [],
         chatMessage: '',
       });
@@ -73,11 +85,25 @@ class App extends React.Component {
       this.setState({
         ...this.state,
         gameState: false,
-        statusMessage: 'Draw!',
         players: [],
         chatMessage: '',
       });
     }
+  };
+
+  handleGameLeft = (e) => {
+    e.preventDefault();
+
+    if (this.room) {
+      this.room.send('exit');
+    }
+
+    this.setState({
+      ...this.state,
+      gameState: false,
+      players: [],
+      chatMessage: '',
+    });
   };
 
   handleChangeMessage = (e) => {
@@ -114,19 +140,26 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App justify-between w-screen h-screen">
+      <div className="App w-screen h-screen">
         {/* body */}
-        <div className="w-screen h-full bg-gray-300 flex">
+        <div className="w-full h-full bg-gray-300 flex">
           {/* left-side container */}
-          <div className="w-full lg:w-7/12 block flex flex-col relative">
+          <div className="w-full lg:w-7/12 flex flex-col relative">
             {/* match button & game board */}
             <div className="w-full flex-1">
               {this.state.gameState ? (
                 /* game board */
                 <div className="w-full h-full flex flex-col justify-start items-center">
-                  <p className="h-auto mt-4 text-xl text-purple-500">
+                  <div className="flex justify-around items-center h-auto mt-4 text-xl text-purple-500">
                     {matchStr}
-                  </p>
+                    <a
+                      className="ml-4 text-base text-purple-500 hover:text-purple-800"
+                      href="#"
+                      onClick={this.handleGameLeft}
+                    >
+                      Left game
+                    </a>
+                  </div>
                   <div className="w-full sm:w-4/5 md:w-7/12 lg:w-2/3 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
@@ -135,18 +168,41 @@ class App extends React.Component {
                     />
                   </div>
                 </div>
-              ) : (
+              ) : this.props.userState ? (
                 /* match button */
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="absolute top-0 mt-4 text-xl text-purple-500">
-                    {this.state.statusMessage}
+                    {`Logged in as ${this.props.userState.username}`}
                   </p>
                   <button
-                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded text-4xl mb-4"
                     onClick={this.handleGameStart}
                   >
                     PLAY NOW!
                   </button>
+                  <Link
+                    to="/setting"
+                    className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                  >
+                    <a className="text-xl lg:text-2xl text-purple-600">
+                      Setting
+                    </a>
+                  </Link>
+                </div>
+              ) : (
+                <div className="w-full h-full flex flex-col justify-center items-center">
+                  <Link to="/login">
+                    <a className="text-xl lg:text-2xl text-purple-600">Login</a>
+                  </Link>
+                  <div className="text-gray-800">or</div>
+                  <Link
+                    to="/signup"
+                    className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
+                  >
+                    <a className="text-xl lg:text-2xl text-purple-600">
+                      Signup
+                    </a>
+                  </Link>
                 </div>
               )}
             </div>
@@ -198,4 +254,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withUser(App);
