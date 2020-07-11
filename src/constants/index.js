@@ -1,1 +1,4 @@
-export const SERVER_URL = process.env.SERVER_URL || 'localhost:2567';
+export const SERVER_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'api.online-tic-tac-toe.com'
+    : 'localhost:2567';
