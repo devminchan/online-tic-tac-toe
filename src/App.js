@@ -25,6 +25,7 @@ class App extends React.Component {
     this.client = new Colyseus.Client(endpoint);
 
     this.history = history;
+    this.chatUlRef = React.createRef();
   }
 
   setGameState = (gameState) => {
@@ -49,8 +50,13 @@ class App extends React.Component {
     });
 
     this.room.onMessage('messages', (message) => {
-      const newChatState = this.state.chatState.unshift(message);
+      const newChatState = this.state.chatState.push(message);
       this.setChatState(newChatState);
+
+      // 채팅 focus 이동
+      if (this.chatUlRef.current) {
+        this.chatUlRef.current.scrollTop = this.chatUlRef.current.scrollHeight;
+      }
     });
 
     this.room.onMessage('players', (players) => {
@@ -208,8 +214,8 @@ class App extends React.Component {
             </div>
 
             {/* chatting */}
-            <div className="w-full flex-initial px-4 py-2 block absolute bottom-0 pointer-events-none">
-              <ul className="h-32 lg:h-48 flex-grow-0 flex flex-col-reverse overflow-auto">
+            <div className="w-full flex-initial px-4 py-2 block absolute bottom-0">
+              <ul className="h-32 lg:h-48 overflow-auto" ref={this.chatUlRef}>
                 {this.state.chatState.map((chat, key) => (
                   <li key={key} className="w-full mx-2 flex flex-wrap">
                     <div className="text-opacity-75 text-indigo-900">
