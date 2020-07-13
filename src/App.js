@@ -2,17 +2,16 @@
 import React from 'react';
 import GameBoard from './components/GameBoard';
 import * as Colyseus from 'colyseus.js';
-import { List } from 'immutable';
 import { Link } from 'react-router-dom';
 import { SERVER_URL } from './constants';
 import withUser from './containers/withUser';
+import { Chatting } from './components/Chatting';
 
 class App extends React.Component {
   state = {
     players: [],
     gmaeState: false,
-    chatState: List([]),
-    chatMessage: '',
+    chatState: [],
   };
 
   constructor({ history }) {
@@ -25,20 +24,12 @@ class App extends React.Component {
     this.client = new Colyseus.Client(endpoint);
 
     this.history = history;
-    this.chatUlRef = React.createRef();
   }
 
   setGameState = (gameState) => {
     this.setState({
       ...this.state,
       gameState,
-    });
-  };
-
-  setChatState = (chatState) => {
-    this.setState({
-      ...this.state,
-      chatState,
     });
   };
 
@@ -50,13 +41,12 @@ class App extends React.Component {
     });
 
     this.room.onMessage('messages', (message) => {
-      const newChatState = this.state.chatState.push(message);
-      this.setChatState(newChatState);
+      const newChatState = [...this.state.chatState, message];
 
-      // 채팅 focus 이동
-      if (this.chatUlRef.current) {
-        this.chatUlRef.current.scrollTop = this.chatUlRef.current.scrollHeight;
-      }
+      this.setState({
+        ...this.state,
+        chatState: newChatState,
+      });
     });
 
     this.room.onMessage('players', (players) => {
@@ -85,14 +75,12 @@ class App extends React.Component {
         ...this.state,
         gameState: false,
         players: [],
-        chatMessage: '',
       });
     } else {
       this.setState({
         ...this.state,
         gameState: false,
         players: [],
-        chatMessage: '',
       });
     }
   };
@@ -112,29 +100,13 @@ class App extends React.Component {
     });
   };
 
-  handleChangeMessage = (e) => {
-    const message = e.target.value;
-
-    this.setState({
-      ...this.state,
-      chatMessage: message,
-    });
-  };
-
-  handleSendMessage = (e) => {
-    e.preventDefault();
-
+  handleSendMessage = (message) => {
     if (!this.room) {
       return;
     }
 
     this.room.send('message', {
-      message: this.state.chatMessage,
-    });
-
-    this.setState({
-      ...this.state,
-      chatMessage: '',
+      message,
     });
   };
 
@@ -190,62 +162,34 @@ class App extends React.Component {
                     to="/setting"
                     className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
                   >
-                    <a className="text-xl lg:text-2xl text-purple-600">
+                    <p className="text-xl lg:text-2xl text-purple-600">
                       Setting
-                    </a>
+                    </p>
                   </Link>
                 </div>
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <Link to="/login">
-                    <a className="text-xl lg:text-2xl text-purple-600">Login</a>
+                    <p className="text-xl lg:text-2xl text-purple-600">Login</p>
                   </Link>
                   <div className="text-gray-800">or</div>
                   <Link
                     to="/signup"
                     className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
                   >
-                    <a className="text-xl lg:text-2xl text-purple-600">
+                    <p className="text-xl lg:text-2xl text-purple-600">
                       Signup
-                    </a>
+                    </p>
                   </Link>
                 </div>
               )}
             </div>
 
             {/* chatting */}
-            <div className="w-full flex-initial px-4 py-2 block absolute bottom-0">
-              <ul
-                className="max-w-full overflow-x-hidden h-32 lg:h-48 overflow-y-auto"
-                ref={this.chatUlRef}
-              >
-                {this.state.chatState.map((chat, key) => (
-                  <li key={key} className="w-full mx-2 flex flex-wrap">
-                    <div className="text-opacity-75 text-indigo-900">
-                      {chat}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-2 h-12 pointer-events-auto">
-                <form action="" className="w-full h-full flex items-center">
-                  <input
-                    className="flex-grow h-8 px-2 rounded"
-                    type="text"
-                    placeholder="Input Text!"
-                    onChange={this.handleChangeMessage}
-                    value={this.state.chatMessage}
-                  />
-                  <button
-                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-4 ml-4 rounded text-base"
-                    type="submit"
-                    onClick={this.handleSendMessage}
-                  >
-                    Send
-                  </button>
-                </form>
-              </div>
-            </div>
+            <Chatting
+              chatState={this.state.chatState}
+              onSendMessage={this.handleSendMessage}
+            />
           </div>
           {/* right-side container */}
           <div className="w-0 hidden lg:block lg:w-5/12 pt-8 pb-4 pl-8 pr-8">
