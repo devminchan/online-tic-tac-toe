@@ -21,19 +21,19 @@ export function Chatting({ chatState, onSendMessage }) {
   }, [chatState]);
 
   return (
-    <div className="w-full flex-initial px-4 py-2 block absolute bottom-0">
+    <div className="w-full h-full px-2 py-2 flex flex-col">
       <ul
-        className="max-w-full overflow-x-hidden h-32 lg:h-48 overflow-y-auto"
+        className="max-w-full overflow-x-hidden h-auto overflow-y-auto flex-auto"
         ref={myRef}
       >
         {chatState &&
           chatState.map((chat, key) => (
-            <li key={key} className="w-full mx-2 flex flex-wrap">
+            <li key={key} className="w-full mx-1 flex flex-wrap">
               <div className="text-opacity-75 text-indigo-900">{chat}</div>
             </li>
           ))}
       </ul>
-      <div className="mt-2 h-12 pointer-events-auto">
+      <div className="w-full mt-2 h-12 pointer-events-auto">
         <form
           action=""
           className="w-full h-full flex items-center"

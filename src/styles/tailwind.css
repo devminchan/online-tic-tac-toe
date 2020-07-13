@@ -17872,6 +17872,10 @@ video {
   grid-template-columns: repeat(19, minmax(0, 1fr));
 }
 
+.h-1_3 {
+  height: 33%;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
@@ -86859,3 +86863,4 @@ video {
     transition-delay: 1000ms;
   }
 }
+

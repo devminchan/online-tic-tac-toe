@@ -128,7 +128,7 @@ class App extends React.Component {
               {this.state.gameState ? (
                 /* game board */
                 <div className="w-full h-full flex flex-col justify-start items-center">
-                  <div className="flex justify-around items-center h-auto mt-4 text-xl text-purple-500">
+                  <div className="flex justify-around items-center h-auto mt-2 lg:mt-4 text-xl text-purple-500">
                     {matchStr}
                     <a
                       className="ml-4 text-base text-purple-500 hover:text-purple-800"
@@ -138,7 +138,7 @@ class App extends React.Component {
                       Left game
                     </a>
                   </div>
-                  <div className="w-full sm:w-4/5 md:w-7/12 lg:w-2/3 pt-4 pb-4 pl-4 pr-4 lg:mb-32 flex justify-center">
+                  <div className="w-full sm:w-4/5 md:w-7/12 lg:w-3/4 lg:mt-8 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
                       onGameEnd={this.handleGameStop}
@@ -149,7 +149,7 @@ class App extends React.Component {
               ) : this.props.userState ? (
                 /* match button */
                 <div className="w-full h-full flex flex-col justify-center items-center">
-                  <p className="absolute top-0 mt-4 text-xl text-purple-500">
+                  <p className="absolute top-0 mt-2 lg:mt-4 text-xl text-purple-500">
                     {`Logged in as ${this.props.userState.username}`}
                   </p>
                   <button
@@ -158,10 +158,7 @@ class App extends React.Component {
                   >
                     PLAY NOW!
                   </button>
-                  <Link
-                    to="/setting"
-                    className="mb-16 sm:mb-24 md:mb-32 lg:mb-40"
-                  >
+                  <Link to="/setting" className="mb-4 lg:mb-8">
                     <p className="text-xl lg:text-2xl text-purple-600">
                       Setting
                     </p>
@@ -186,19 +183,30 @@ class App extends React.Component {
             </div>
 
             {/* chatting */}
-            <Chatting
-              chatState={this.state.chatState}
-              onSendMessage={this.handleSendMessage}
-            />
+            <div className="w-full mt-4 h-1_3 block lg:hidden fixed bottom-0">
+              <Chatting
+                chatState={this.state.chatState}
+                onSendMessage={this.handleSendMessage}
+              />
+            </div>
           </div>
+
           {/* right-side container */}
-          <div className="w-0 hidden lg:block lg:w-5/12 pt-8 pb-4 pl-8 pr-8">
+          <div className="w-auto h-full hidden items-stretch flex-col lg:flex lg:w-5/12 pt-8 pb-4 pl-2 pr-8">
             {/* leaderboard */}
-            <div className="bg-gray-400 w-full h-full rounded flex flex-col">
+            <div className="h-auto bg-gray-400 flex-1 w-full rounded flex flex-col">
               <div className="flex justify-center pt-2 pb-4">
                 <h3 className="text-3xl text-purple-600">LEADERBOARDS</h3>
               </div>
               <div className="text-2xl text-center mt-4">COMMING SOON!</div>
+            </div>
+
+            {/* chatting */}
+            <div className="w-full mt-4 h-1_3 hidden lg:block">
+              <Chatting
+                chatState={this.state.chatState}
+                onSendMessage={this.handleSendMessage}
+              />
             </div>
           </div>
         </div>

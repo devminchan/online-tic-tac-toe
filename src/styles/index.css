@@ -11,3 +11,8 @@
 .grid-cols-19 {
   grid-template-columns: repeat(19, minmax(0, 1fr));
 }
+
+.h-1_3 {
+  height: 33%;
+}
+
