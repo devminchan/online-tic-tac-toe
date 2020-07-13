@@ -215,7 +215,10 @@ class App extends React.Component {
 
             {/* chatting */}
             <div className="w-full flex-initial px-4 py-2 block absolute bottom-0">
-              <ul className="h-32 lg:h-48 overflow-auto" ref={this.chatUlRef}>
+              <ul
+                className="max-w-full overflow-x-hidden h-32 lg:h-48 overflow-y-auto"
+                ref={this.chatUlRef}
+              >
                 {this.state.chatState.map((chat, key) => (
                   <li key={key} className="w-full mx-2 flex flex-wrap">
                     <div className="text-opacity-75 text-indigo-900">
