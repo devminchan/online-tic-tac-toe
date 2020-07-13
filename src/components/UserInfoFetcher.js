@@ -14,7 +14,7 @@ export default function () {
       if (!e.response || e.response.status !== 401) {
         // alert(e.message);
       } else {
-        alert(e.message);
+        // alert(e.message);
       }
     }
   };
