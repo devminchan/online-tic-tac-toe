@@ -138,7 +138,7 @@ class App extends React.Component {
                       Left game
                     </a>
                   </div>
-                  <div className="w-full sm:w-4/5 md:w-7/12 lg:w-3/4 lg:mt-8 flex justify-center">
+                  <div className="w-full h-auto sm:w-4/5 md:w-7/12 lg:w-3/4 lg:mt-8 flex justify-center">
                     <div className="pb-100p"></div>
                     <GameBoard
                       onGameEnd={this.handleGameStop}
