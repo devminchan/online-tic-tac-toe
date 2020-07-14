@@ -43,7 +43,7 @@ class GameBoard extends React.Component {
 
   render() {
     return (
-      <div className="h-full w-full bg-gray-400 grid grid-cols-19 rounded">
+      <div className="w-full h-auto bg-gray-400 grid grid-cols-19 rounded">
         {this.reduceNumbers().map((idx) => (
           <div
             key={idx}

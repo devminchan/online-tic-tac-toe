@@ -12,7 +12,9 @@ export default function () {
       setUserState(user);
     } catch (e) {
       if (!e.response || e.response.status !== 401) {
-        alert.error(e.message);
+        // alert(e.message);
+      } else {
+        // alert(e.message);
       }
     }
   };
